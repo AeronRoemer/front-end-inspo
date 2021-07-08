@@ -9,25 +9,27 @@ import Card from './Card.js'
 
 const Board = (props) =>{
     const [boardData, setBoardData] = useState([])
+    const [cardData, setCardData] = useState([])
     useEffect(()=>{
         if (props.id){
             axios.get(`http://localhost:5000/boards/${props.id}/cards`)
             .then((res)=>{
                 console.log(res.data)
             setBoardData(res.data)
+            setCardData(res.data.cards)
             })
         } else{
             return null
         }
         
     }, [props])
-    console.log(boardData)
-
-    const cardsList = boardData.cards.map((card, index)=> {
-        return <Card id={card.card_id} />
+    const deleteCard = (id) => {
+        return false
+    }
+    const cardsList = cardData.map((card, index)=> {
+        return <Card card={card} key={index}/>
       })
 
-    console.log(boardData)
         return(
             <div className="board-display-container">
                 <h3>Hi, I'm {boardData.title}</h3>
