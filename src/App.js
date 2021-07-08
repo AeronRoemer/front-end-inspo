@@ -17,13 +17,13 @@ function App() {
   }, [])
   // click handler given to each board title in the list
   const clickSetBoard = (id) =>{
+    console.log(id)
     setBoard(id)
   }
   const boardsList = boards.map((board, index)=> {
-    console.log(board)
     return <li key={index} onClick={() => clickSetBoard(board.board_id)}>{board.title}</li>
   })
-  console.log('setting board', boardId)
+  console.log(boardId)
   return (
     <div className="App">
       <div className="baords-display-container">
@@ -31,7 +31,8 @@ function App() {
         <ul>
         {boardsList}
         </ul>
-        <Board id={boardId} />
+        {boardId ? <Board id={boardId} /> : ''}
+        
       </div>
     </div>
   );
