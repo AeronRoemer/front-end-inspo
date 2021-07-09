@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Card from './Card.js'
 
-
+const BASE_URL = 'http://localhost:5000'
 // rather than passing props data to have info about baord, we're making another API call. 
 // that way, our cards and board info is all in one place
 
@@ -12,9 +12,8 @@ const Board = (props) =>{
     const [cardData, setCardData] = useState([])
     useEffect(()=>{
         if (props.id){
-            axios.get(`http://localhost:5000/boards/${props.id}/cards`)
+            axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
-                console.log(res.data)
             setBoardData(res.data)
             setCardData(res.data.cards)
             })
@@ -23,11 +22,22 @@ const Board = (props) =>{
         }
         
     }, [props])
+
     const deleteCard = (id) => {
-        return false
+        // deletes card, triggers re-render by setting state to list of all cards
+        // uses API call instead of checking over list of current cards for consistency,
+        // so if server goes down etc does not thing they're making changes.
+        axios.delete(`${BASE_URL}/cards/${id}`).then(()=>{
+            axios.get(`${BASE_URL}/boards/${props.id}/cards`)
+            .then((res)=>{
+            setCardData(res.data.cards)
+            })
+            }
+        )
     }
+    
     const cardsList = cardData.map((card, index)=> {
-        return <Card card={card} key={index}/>
+        return <Card card={card} key={index} deleteCard={deleteCard}/>
       })
 
         return(
