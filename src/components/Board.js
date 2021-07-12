@@ -40,6 +40,7 @@ const Board = (props) =>{
         // updates card, triggers re-render by setting state to list of all cards
         // uses API call instead of checking over list of current cards for consistency,
         // so if server goes down etc does not thing they're making changes.
+        count += 1
         axios.put(`${BASE_URL}/cards/${id}/like`, {'likes_count': count}).then(()=>{
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
@@ -50,7 +51,7 @@ const Board = (props) =>{
     }
     
     const cardsList = cardData.map((card, index)=> {
-        return <Card card={card} key={index} deleteCard={deleteCard} />
+        return <Card card={card} key={index} deleteCard={deleteCard} likeCard={likeCard}/>
       })
 
         return(
