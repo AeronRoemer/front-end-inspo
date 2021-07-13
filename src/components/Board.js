@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Card from './Card.js'
+import NewCard from "./NewCard.js";
 
 const BASE_URL = 'http://localhost:5000'
 // rather than passing props data to have info about baord, we're making another API call. 
@@ -14,8 +15,11 @@ const Board = (props) =>{
         if (props.id){
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
+            console.log(res.data)
             setBoardData(res.data)
             setCardData(res.data.cards)
+            }).catch(error => {
+                return {'error': error}
             })
         } else{
             return null
@@ -31,6 +35,8 @@ const Board = (props) =>{
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
             setCardData(res.data.cards)
+            }).catch(error => {
+                return {'error': error}
             })
             }
         )
@@ -45,6 +51,8 @@ const Board = (props) =>{
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
             setCardData(res.data.cards)
+            }).catch(error => {
+                return {'error': error}
             })
             }
         )
@@ -54,11 +62,25 @@ const Board = (props) =>{
         return <Card card={card} key={index} deleteCard={deleteCard} likeCard={likeCard}/>
       })
 
+    const newCardSubmit = (id, message) => {
+        // uses new card route to generate new card, resets card data with the new card included
+        axios.post(`${BASE_URL}/boards/${id}/cards`, {"message": message}).then(()=>{
+            axios.get(`${BASE_URL}/boards/${props.id}/cards`)
+            .then((res)=>{
+            setCardData(res.data.cards)
+            }).catch(error => {
+                return {'error': error}
+            })
+            }
+        )
+    }
+
         return(
             <div className="board-display-container">
                 <h3>Hi, I'm {boardData.title}</h3>
                 <h4>These are my cards:</h4>
                 {boardData ? cardsList : ''}
+                <NewCard newCardSubmit={newCardSubmit}/>
             </div>
             
         )

@@ -1,8 +1,3 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-const BASE_URL = 'http://localhost:5000'
-
 const Card = (props) => {
     const data = props.card
     const deleteCard = props.deleteCard
