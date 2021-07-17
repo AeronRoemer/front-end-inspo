@@ -15,7 +15,6 @@ const Board = (props) =>{
         if (props.id){
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
-            console.log(res.data)
             setBoardData(res.data)
             setCardData(res.data.cards)
             }).catch(error => {
@@ -64,10 +63,9 @@ const Board = (props) =>{
         return <Card card={card} key={index} deleteCard={deleteCard} likeCard={likeCard}/>
       })
 
-    const newCardSubmit = (event) => {
-        console.log(event)
+    const newCardSubmit = (message) => {
         // uses new card route to generate new card, resets card data with the new card included
-        axios.post(`${BASE_URL}/boards/${props.id}/cards`, {"message": event}).then(()=>{
+        axios.post(`${BASE_URL}/boards/${props.id}/cards`, {"message": message}).then(()=>{
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
             setCardData(res.data.cards)
