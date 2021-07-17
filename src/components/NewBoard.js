@@ -1,7 +1,10 @@
 import { useState } from "react";
 
-const NewBoard = () =>{
+const NewBoard = (props) =>{
     const [ hidden, setHidden ] = useState(false);
+    const submitBoard = props.submitBoard;
+    let owner = '';
+    let title = '';
 
     const hideForm = () => {
         setHidden(true);
@@ -10,17 +13,32 @@ const NewBoard = () =>{
         setHidden(false);
     }
 
+    const submitHandler = (e) =>{
+        e.preventDefault();
+        submitBoard(title, owner)
+
+    }
+
+    const updateOwner = (e) => {
+        owner = e.target.value
+      };
+    const updateTitle = (e) => {
+        title = e.target.value
+      };
+
+
     if ( hidden == false ){
         return(
             <section>
                 <div className='new-card-form-container'>
                     <h4>Create a New Board</h4>
-                    <form>
+                    <form onSubmit={(e)=>submitHandler(e)}>
                         <input 
                         className="board-input"
                         type='text' 
                         name='name'
                         placeholder="Your Name"
+                        onChange={updateOwner}
                         />
                         <br />
                         <input 
@@ -28,6 +46,7 @@ const NewBoard = () =>{
                         type='text' 
                         name='name'
                         placeholder="Board Name"
+                        onChange={updateTitle}
                         />
 
                         <button
