@@ -27,6 +27,8 @@ const Board = (props) =>{
         
     }, [props])
 
+    // could refactor because of multiple 'get' calls on card updates. 
+
     const deleteCard = (id) => {
         // deletes card, triggers re-render by setting state to list of all cards
         // uses API call instead of checking over list of current cards for consistency,
@@ -62,9 +64,10 @@ const Board = (props) =>{
         return <Card card={card} key={index} deleteCard={deleteCard} likeCard={likeCard}/>
       })
 
-    const newCardSubmit = (id, message) => {
+    const newCardSubmit = (event) => {
+        console.log(event)
         // uses new card route to generate new card, resets card data with the new card included
-        axios.post(`${BASE_URL}/boards/${id}/cards`, {"message": message}).then(()=>{
+        axios.post(`${BASE_URL}/boards/${props.id}/cards`, {"message": event}).then(()=>{
             axios.get(`${BASE_URL}/boards/${props.id}/cards`)
             .then((res)=>{
             setCardData(res.data.cards)
