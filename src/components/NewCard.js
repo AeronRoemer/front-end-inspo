@@ -1,4 +1,3 @@
-
 const NewCard = (props) => {
     const addCard = props.newCardSubmit;
     let message = ''
@@ -12,9 +11,9 @@ const NewCard = (props) => {
     const updateMessage = (e) => {
         message = e.target.value
       };
-      
+
     return (
-        <section>
+        <section >
             <div className='new-card-form-container'>
                 <h4>Create a New Card</h4>
                 <form onSubmit={(e)=>submitHandler(e)}>

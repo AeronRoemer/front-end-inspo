@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'; 
 import axios from 'axios';
 import Board from './components/Board.js'
+import NewBoard from './components/NewBoard.js';
 
 import './App.css';
 
@@ -25,12 +26,19 @@ function App() {
 
   return (
     <div className="App">
-      <div className="baords-display-container">
-        <h2>Available Boards</h2>
-        <ul>
-        {boardsList}
-        </ul>
-        {boardId ? <Board id={boardId} /> : ''}
+      <div className="boards-display-container">
+        <div className='boards-list-container'>
+          <h2>Available Boards</h2>
+          <ul>
+            {boardsList}
+          </ul>
+        </div>
+        <div>
+          <NewBoard />
+        </div>
+        <section className="current-board">
+          {boardId ? <Board id={boardId} /> : ''}
+        </section>
         
       </div>
     </div>
