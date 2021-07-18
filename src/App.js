@@ -22,9 +22,10 @@ function App() {
   useEffect(()=>{
     axios.get(`${BASE_URL}/boards`)
     .then((res)=>{
+      console.log(res.data)
       setBoards(res.data)
     })
-  }, [submitBoard])
+  }, [])
   // click handler given to each board title in the list
   const clickSetBoard = (id) =>{
     setBoard(id)

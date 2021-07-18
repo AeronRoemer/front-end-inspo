@@ -44,7 +44,7 @@ const NewBoard = (props) =>{
                         <input 
                         className="board-input"
                         type='text' 
-                        name='name'
+                        name='board-name'
                         placeholder="Board Name"
                         onChange={updateTitle}
                         />
